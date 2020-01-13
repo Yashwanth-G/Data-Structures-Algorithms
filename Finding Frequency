@@ -1,0 +1,31 @@
+import java.io.*; 
+import java.util.*; 
+class Solution { 
+static HashMap <Integer, Integer> hm = new HashMap<Integer, Integer>(); 
+static void countFreq(int a[], int n) 
+{  
+        for (int i=0; i<n; i++) 
+            if (hm.containsKey(a[i]) ) 
+                hm.put(a[i], hm.get(a[i]) + 1); 
+            else hm.put(a[i] , 1); 
+    } 
+    static int query(int x) 
+    { 
+        if (hm.containsKey(x)) 
+            return hm.get(x); 
+        return 0; 
+    } 
+    public static void main (String[] args) { 
+        Scanner scan = new Scanner(System.in);
+        int size = scan.nextInt();
+        int arr[] = new int[size];
+        for(int i = 0 ; i < size ; i++)
+            arr[i] = scan.nextInt();
+        countFreq(arr, arr.length); 
+        int queries = scan.nextInt();
+        for(int i = 0 ; i < queries ; i++){
+            int n = scan.nextInt();
+            System.out.println(query(n)); 
+        }
+    } 
+} 
