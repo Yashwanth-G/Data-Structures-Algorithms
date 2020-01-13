@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+       long long int a, b;
+    int T;   
+    scanf("%d",&T);
+       while(T > 0){
+    scanf("%lld%lld",&a,&b);
+   long long int res = 1 ;
+    while(b > 0 ){
+        if(b & 1)
+            res = ((res % 1000000007) * (a % 1000000007) % 1000000007);
+        b >>= 1 ;
+        a = ((a % 1000000007) * (a % 1000000007)) % 1000000007;
+    }
+    printf("%lld\n",res%1000000007);
+    --T;
+    }
+    return 0;
+}
