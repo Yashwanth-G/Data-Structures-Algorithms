@@ -1,0 +1,22 @@
+//Java program to find square of a number using bitwise operators
+
+public class SqaureOfANumberUsingBitwiseOperators{
+  static int square(int n){
+    if(n == 0) //base case
+      return 0;
+    if(n < 0) //handle negative number
+      n = -n;
+    int x = n >> 1; //Get floor(n/2) using right shift
+    if(n % 2 != 0) // If n is odd
+      return ((square(x) << 2) + (x << 2) + 1 );
+    else // If n is even
+      return (square(x) << 2);
+  }
+  public static void main(String[] args){
+    for(int n = 1; n <= 5; n++)
+      System.out.println("n = "+ n + "n ^ 2 = "+square(n));
+  }
+} 
+
+
+//Time Complexity: O(log(n))
