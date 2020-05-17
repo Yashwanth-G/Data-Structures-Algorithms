@@ -1,0 +1,359 @@
+//LinkedList Operations in C
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+/*
+#include<stdlib.h>
+#define CLRSCR  system(“cls”);
+inline void foo() { CLRSCR }
+*/
+
+struct node {
+	int data;
+	struct node *link;
+};
+struct node *root = NULL;
+
+int count;
+int length(struct node *p){
+	count = 0;
+	struct node *temp;
+	temp = p;
+	while(temp != NULL){
+		count++;
+		temp = temp -> link;
+	}
+	return count;
+}
+
+void append(){
+	struct node *temp = (struct node*)malloc(sizeof(struct node)); //node is created and root is pointing to the node
+	printf("Enter element\n");
+	scanf("%d",&temp -> data);
+	temp -> link = NULL;
+	if(root == NULL){ //first node insertion
+		root = temp;
+	}
+	else{ // If already some elements are present in the list
+		struct node *p;
+		p = root;
+		while(p -> link != NULL){
+			p = p -> link;
+		}
+		p -> link = temp; //p -> link will give last node address and thus we assign temp at the end 
+	}
+}
+
+void addafter(){
+	struct node *temp, *p;
+	int loc, len, i = 1;
+	printf("Enter the location to insert a node\n");
+	scanf("%d",&loc);
+	len = length(root);
+	if(loc > len || loc <= 0){
+		printf("Invalid location, currently list is having %d nodes\n",len);
+	}
+	else{
+		p = root;
+		while(i < loc){
+			p = p -> link;
+			i++;
+		}
+		temp = (struct node *)malloc(sizeof(struct node));
+		printf("Enter the element to be inserted at specified location\n");
+		scanf("%d",&temp -> data);
+		temp -> link = NULL;
+		temp -> link = p -> link;  //right side connection - (first) 
+		p -> link = temp; // left side connection - (second)
+	}
+}
+
+void appendAtBeginning(){
+	struct node *temp = (struct node *)malloc(sizeof(struct node));
+	printf("Enter the element\n");
+	scanf("%d",&temp->data);
+	temp -> link = NULL;
+	if(root == NULL){
+		root = temp;
+	}
+	else{
+		temp -> link = root; //right connection (first) 
+		root = temp; //left connection (second)
+	}
+}
+
+void display(){
+	int countt = 0;
+	countt = length(root);
+	printf("Below are the %d nodes present\n",countt);
+	struct node *temp;
+	temp = root;
+	if(temp == NULL){
+		printf("Linked List is empty\n");
+	}
+	else{
+	int j = 0;
+	while(temp != NULL){
+		if(j != countt-1){
+		printf("%d -> ",temp -> data);
+		++j;
+		}
+		else{
+		printf("%d",temp -> data);
+		++j;
+		}
+		temp = temp -> link;
+		}
+	printf("\n\n");
+	}
+}
+
+void deletenode(){
+	struct node* temp;
+	int loc;
+	printf("Enter the location of the node to be deleted\n");
+	scanf("%d",&loc);
+	if(loc > length(root) || loc <= 0){
+		printf("Invalid Node location\n");
+	}
+	else if(loc == 1){
+		temp = root;
+		root = temp -> link;
+		temp -> link = NULL;
+		printf("%d is deleted\n",temp->data);
+		free(temp);
+	}
+	else{
+		struct node *p1 = root, *p2;
+		int i = 1;
+		while(i < loc - 1){
+			p1 = p1 -> link;
+			i++;
+		}
+		p2 = p1 -> link;
+		p1 -> link = p2 -> link;
+		p2 -> link = NULL;
+		printf("%d is deleted\n",p2->data);
+		free(p2);
+	}
+}
+
+void swapnodes(){
+	int loc, len, i = 1;
+	struct node *p = root, *q, *r;
+	len = length(root);
+	printf("Enter the location to swap the 2 adjacent nodes\n");
+	scanf("%d",&loc);
+	if(loc <= 0 || loc > len || loc == len){
+		printf("Invalid location\n");
+	}
+	else{
+		printf("Nodes %d and %d will be interchanged\n",loc,loc+1);
+		while(i < loc - 1){
+			p = p -> link;
+			i++;
+		}
+		q = p -> link;
+		r = q -> link;
+		//adjacent nodes swapping 
+		q -> link = r -> link;
+		r -> link = q;
+		p -> link = r;
+	}
+}
+
+void reverselist(){
+	int i, j, k, len = length(root);
+	struct node *p, *q ;
+	i = 0;
+	j = len - 1;
+	p = q = root;
+	/* swapping 1st node with last node, 2nd node with (last-1)th node and so on.. is the logic for reversing the
+	 linkedlist we will stop when i > j */
+	while(i < j){
+		k = 0;
+		//initially q is pointing to root, now we making q to point to last node by using below while loop
+		while(k < j){
+			q = q -> link;
+			k++;
+		}
+		//swapping node values
+		int temp = p -> data;
+		p -> data = q -> data;
+		q -> data = temp;
+		i++;
+		j--;
+		//make p to point 2nd node
+		p = p -> link;
+		//q again starts again with root because we can not make q to point (last - 1)th node
+		q = root;
+	}
+}
+
+void searchelement(){
+	struct node *p = root;
+	int key, pos = 1, res = 0;
+	printf("Enter the element to be searched\n");
+	scanf("%d",&key);
+	while(p != NULL){
+		if(p -> data == key){
+			printf("Element %d found at Node %d\n",key,pos);
+			res = 1;
+			break;
+		}
+		p = p -> link;
+		pos++;
+	}
+	if(res == 0){
+		printf("Element not found\n");
+	}
+}
+
+void addaftergivenelement(){
+	int key, pos = 1, res = 0;
+	struct node *p = root;
+	struct node *q = (struct node *)malloc(sizeof(struct node));
+	printf("Enter the element to insert another node\n");
+	scanf("%d",&key);
+	while(p != NULL){
+		if(p -> data == key){
+			res = 1;
+			break;
+		}
+		p = p -> link;
+		pos++;
+	}
+	if(res == 0)
+		printf("No key found with the given element\n");
+	else{
+		printf("Enter the new node data\n");
+		scanf("%d",&q -> data);
+		q -> link = NULL;
+		q -> link = p -> link;
+		p -> link = q;
+	}
+}
+
+void deletebyvalue(){
+	struct node *prev, *temp1 = root;
+	int key, pos = 1;
+	display();
+	printf("Enter the value to delete from the above values\n");
+	scanf("%d",&key);
+	while(temp1 != NULL){
+		if(temp1 -> data == key){
+			break;	
+		}
+		prev = temp1;
+		temp1 = temp1 -> link;
+		pos++;	
+	}
+	if(pos == 1){
+		root = temp1 -> link;
+		temp1 -> link = NULL;
+		printf("%d is deleted\n",temp1 -> data);
+		free(temp1);
+	}
+	else{
+		prev -> link = temp1 -> link;
+		temp1 -> link = NULL;
+		printf("%d is deleted\n",temp1 -> data);
+		free(temp1);
+	}
+}
+
+void deletelastnode(){
+	struct node *prev = root, *p = root;
+	if(root == NULL){
+		printf("List is empty\n");
+	}
+	else{
+	while(p -> link != NULL){
+		prev = p;
+		p = p -> link;
+	}
+	if(p == root){
+		root = NULL;
+	}
+	else{
+	prev -> link = NULL;
+	}
+	printf("%d deleted\n",p -> data);
+	free(p);
+	}
+}
+
+void sort(){
+	//This sorting logic is similiar to bubble sort algorithm used for arrays
+	struct node *i, *j;
+	i = root;
+	for(i = root; i -> link != NULL ; i = i -> link){
+		for(j = i -> link ; j!= NULL ; j = j -> link){
+			if(i -> data > j -> data){
+				int temp = i -> data;
+				i -> data = j -> data;
+				j -> data = temp;
+			}
+		}
+	}
+}
+
+int main(){
+	int ch, len;
+	char res[1];
+	do{
+	printf("*********** LINKED LIST OPERATIONS ***********\n");
+	printf("1. Append an element at end\n");
+	printf("2. Add an element at the beginning\n");
+	printf("3. Add an element after the specified position\n");
+	printf("4. Delete the Node by location\n");
+	printf("5. Delete the Node by value\n");
+	printf("6. Display the Linked list\n");
+	printf("7. Length of the Linked list\n");
+	printf("8. Reverse the Linked list\n");
+	printf("9. Swap 2 adjacent nodes in the Linked list\n");
+	printf("10. Sort the Linked list\n");
+	printf("11. Search an element in the List (Linear Search)\n");
+	printf("12. Add an element after the given element\n");
+	printf("13. Delete the last node of the list\n");
+	printf("Enter your choice\n");
+	scanf("%d",&ch);
+	//system("cls");
+	switch (ch) { 
+       case 1: append(); 
+               	break; 
+       case 2: appendAtBeginning(); 
+               	break;
+       case 3: addafter(); 
+               	break;
+	   case 4: deletenode();
+       			break;
+	   case 5: deletebyvalue();
+       			break; 
+       case 6: display();
+       			break;
+	   case 7: len = length(root); 
+             printf("Length of Linked List : %d\n",len);
+			      break; 
+	   case 8: reverselist();
+       			break;
+       case 9: swapnodes();
+       		    break;
+       case 10: sort();
+       		    break;
+       case 11: searchelement();
+       		    break; 
+       case 12: addaftergivenelement();
+       		    break;	
+	   case 13: deletelastnode();
+       		    break;	   
+       default: printf("Invalid Choice\n"); 
+                break;   
+   }
+   	printf("Do you want to perform another operation ? Type (Y/N) \n");
+	scanf("%s",res);
+	}while(!strcmp(res,"Y"));
+	return 0;
+}
