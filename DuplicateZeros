@@ -1,0 +1,38 @@
+// Duplicate zeros 
+
+class Solution 
+{
+    public void duplicateZeros(int[] arr)
+  {
+        int i = 0, count = 0;
+		for(i = 0 ; i < arr.length ; i++)
+		{
+			if(arr[i] == 0)
+			{
+				++count;
+			}
+		}
+		int size = arr.length + count;
+		int arr1[] = new int[size];
+		//System.out.println(arr1.length);
+		int k = 0;
+		for(int j = 0 ; j < arr1.length ; j++)
+		{
+			if(arr[k] == 0)
+			{
+				arr1[j] = arr[k];
+				j++;
+				k++;
+			}
+			else
+			{
+				arr1[j] = arr[k];
+				k++;
+			}
+		}
+		for(int m = 0 ; m < arr.length; m++)
+		{
+			arr[m] = arr1[m];
+		}
+    }
+}
