@@ -1,0 +1,40 @@
+// optimised code for duplicating zeros in an array
+
+/* Approach: (array indexes start from 0)
+**  step1: count the number of zeros in the given array
+**  step2: Take two pointers one from the increased array length(arr.length + zeros - 1) name it as j and other pointer from last element of array (ar.length - 1) name it as i
+**  step3: Loop until both the pointers point to same index and in the loop if j < arr.length replace j with i
+*/
+
+class Solution
+{
+  public void duplicateZeros(int[] arr)
+  {
+    int zeros = 0;
+    for(int i : arr)
+    {
+      if(i == 0)
+      {
+        zeros++;
+      }
+    }
+    int i = arr.length - 1, j = arr.length + zeros - 1;
+    while(i != j)
+    {
+      insert(arr, i, j--);
+      if(arr[i] == 0)
+      {
+        //if arr[i] == 0 we have place zeros twice
+        insert(arr, i, j--);
+      }
+      i--;
+    }
+  }
+  private void insert(int[] arr, int i, int j)
+  {
+    if(j < arr.length)
+    {
+      arr[j] = arr[i];
+    }
+  }
+}
