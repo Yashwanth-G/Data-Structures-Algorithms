@@ -1,0 +1,32 @@
+// Java program for checking If N and Its Double Exist
+
+class Solution 
+{
+    public boolean checkIfExist(int[] arr) 
+    {
+        int n, res, zeros = 0;
+        for(int i = 0 ; i < arr.length; i++)
+        {
+            if(arr[i] == 0)
+                ++zeros;
+        }
+        if(zeros == arr.length){
+            return true;
+        }
+        else
+        {
+        for(int i = 0 ; i < arr.length ; i++)
+        {
+            n = arr[i];
+            for(int k = 0 ; k < arr.length ; k++)
+            {
+				if(n == 2 * arr[k] && arr[k] != 0)
+                {
+                    return true;
+                }
+            }
+        }
+        }
+        return false;
+    }
+}
