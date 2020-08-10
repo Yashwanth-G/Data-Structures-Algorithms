@@ -1,0 +1,14 @@
+// Java program to Replace Elements with Greatest Element on Right Side
+
+class Solution {
+    public int[] replaceElements(int[] arr) {
+       int last = -1;
+        for(int index = arr.length - 1 ; index >= 0 ; index--)
+        {
+            int temp = arr[index];
+            arr[index] = last;
+            last = Math.max(last, temp);
+        }
+		return arr;
+    }
+}
