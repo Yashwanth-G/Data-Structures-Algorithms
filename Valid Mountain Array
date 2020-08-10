@@ -1,0 +1,33 @@
+// Java program to check valid mountain array
+
+class Solution {
+    public boolean validMountainArray(int[] A) {
+       int i, count = 1;
+		boolean loop1 = false, loop2 = false;
+		if(A.length >= 3){
+		for(i = 0 ; i < A.length ; i++)
+		{
+			if(i + 1 < A.length)
+			if(A[i] < A[i + 1]){
+				++count;
+				loop1 = true;
+			}
+			else
+				break;
+		}
+		for(i = count - 1 ; i < A.length ; i++)
+		{
+			if(i + 1 < A.length)
+			if(A[i] > A[i + 1]){
+				++count;
+				loop2 = true;
+			}	
+			else
+				break;
+		}
+		if(count == A.length && loop1 == true && loop2 == true)
+			return true;
+		}
+		return false;
+    }
+}
