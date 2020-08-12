@@ -1,0 +1,23 @@
+// Java program to find third maximum number in an array
+
+class Solution {
+    public int thirdMax(int[] nums) {
+        long firstMax = Long.MIN_VALUE;
+        long secondMax = Long.MIN_VALUE;
+        long thirdMax = Long.MIN_VALUE;
+        for(int num :  nums) {
+            if(num > firstMax) {
+                thirdMax = Math.max(thirdMax, secondMax);
+                secondMax = Math.max(secondMax, firstMax);
+                firstMax = Math.max(firstMax,num);
+            } else if(num > secondMax && num != firstMax) {
+                thirdMax = Math.max(thirdMax, secondMax);
+                secondMax = Math.max(secondMax, num);
+            } else if(num > thirdMax && num != secondMax && num != firstMax) {
+                thirdMax = Math.max(thirdMax, num);
+            }
+        }
+        
+        return thirdMax == Long.MIN_VALUE ? (int)firstMax : (int)thirdMax;
+    }
+}
