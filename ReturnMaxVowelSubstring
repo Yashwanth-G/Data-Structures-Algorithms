@@ -1,0 +1,46 @@
+/*
+The substring length is 5 (k = 5) that contains the maximum number of vowels is 'erqii' with 3 vowels
+The final answer is - erqii
+*/
+
+class Solution2
+{
+	static String result = "";
+	static int max = 0;
+	public static String returnVowelString(String s, int k)
+	{
+		int len = 0;
+		for(int i = 0 ; i < s.length() ; i++)
+		{
+			if((i + k) < s.length())
+				len = i + k;
+			String s1 = s.substring(i, len);
+			
+			vowelString(s1);
+		}
+		return result;
+	}
+	public static void vowelString(String w)
+	{
+		int count = 0;
+		char[] c = w.toCharArray();
+		for(int i = 0 ; i < c.length ; i++)
+		{
+			if(c[i] == 'a' || c[i] == 'e' || c[i] == 'i' || c[i] == 'o' || c[i] == 'u')
+			{
+				++count;
+			}
+		}
+		if(max < count){
+			max = count;
+			result = new String(c);
+		}
+	}
+	public static void main(String[] args)
+	{
+		String s = "caberqiitefg";
+		int k = 5;
+		String res = returnVowelString(s, k);
+		System.out.println(res);
+	}
+}
