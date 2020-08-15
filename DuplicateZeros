@@ -9,7 +9,7 @@ class Solution
 		{
 			if(arr[i] == 0)
 			{
-				++count;
+			  ++count;
 			}
 		}
 		int size = arr.length + count;
