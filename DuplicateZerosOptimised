@@ -1,5 +1,6 @@
 // optimised code for duplicating zeros in an array
 
+
 /* Approach: (array indexes start from 0)
 **  step1: count the number of zeros in the given array
 **  step2: Take two pointers one from the increased array length(arr.length + zeros - 1) name it as j and other pointer from last element of array (ar.length - 1) name it as i
