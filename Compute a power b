@@ -3,8 +3,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-int main() {
-       long long int a, b;
+int main() 
+{
+    long long int a, b;
     int T;   
     scanf("%d",&T);
        while(T > 0){
